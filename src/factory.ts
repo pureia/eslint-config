@@ -1,7 +1,6 @@
-import { ignores, imports, javascript, typescript } from './configs';
-
-import type { Awaitable, ConfigOptions, FlatConfigItem } from './types';
 import type { Linter } from 'eslint';
+import type { Awaitable, ConfigOptions, FlatConfigItem } from './types';
+import { ignores, imports, javascript, typescript } from './configs';
 
 /**
  * Create ESLint configuration based on provided options
@@ -45,7 +44,6 @@ export async function useConfig(
   configs.push(...extraConfigs);
 
   const resolvedConfigs = await Promise.all(configs);
-  console.log(resolvedConfigs);
 
   return resolvedConfigs.flat().filter(Boolean);
 }

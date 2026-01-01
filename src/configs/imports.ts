@@ -1,6 +1,6 @@
-import { importDefault } from '../utils';
-
 import type { FlatConfigItem } from '../types';
+
+import { importDefault } from '../utils';
 
 export async function imports(): Promise<FlatConfigItem[]> {
   const [importPlugin] = await Promise.all([
@@ -48,27 +48,21 @@ export async function imports(): Promise<FlatConfigItem[]> {
           'error',
           {
             groups: [
+              'type', // 类型导入
               'builtin', // 内置模块
               'external', // 外部依赖
               'internal', // 内部模块
               ['parent', 'sibling'], // 父级和同级
               'index', // 索引文件
               'object', // 对象类型
-              'type', // 类型导入
             ],
-            'newlines-between': 'always', // 组之间强制空行
+            'newlines-between': 'ignore', // 组之间强制空行
+            sortTypesGroup: true, // 对类型导入进行排序
+            'newlines-between-types': 'never', // 类型导入组之间强制空行
             alphabetize: {
               order: 'asc', // 按字母顺序排序
               caseInsensitive: true, // 不区分大小写
             },
-            pathGroups: [
-              {
-                pattern: 'react', // React 相关
-                group: 'external',
-                position: 'before',
-              },
-            ],
-            pathGroupsExcludedImportTypes: ['react', 'builtin'],
           },
         ], // 强制导入排序
         'import/no-cycle': 'warn', // 禁止循环依赖

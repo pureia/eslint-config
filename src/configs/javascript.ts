@@ -1,6 +1,5 @@
-import { importDefault } from '../utils';
-
 import type { FlatConfigItem } from '../types';
+import { importDefault } from '../utils';
 
 export async function javascript(): Promise<FlatConfigItem[]> {
   const [
@@ -31,10 +30,20 @@ export async function javascript(): Promise<FlatConfigItem[]> {
       name: 'purea/javascript/rules',
       rules: {
         // Possible Errors - 可能的错误
-        'no-console': 'warn', // 禁用 console，警告级别
+        'no-console': 'warn', // 禁用 console
         'no-debugger': 'error', // 禁用 debugger 语句
         'no-alert': 'warn', // 禁用 alert，警告级别
         'no-constant-condition': ['warn', { checkLoops: false }], // 禁用常量条件表达式（循环中除外）
+        'no-constant-binary-expression': 'warn', // 禁止常量二元表达式
+        'for-direction': 'error', // 检查 for-in 循环的方向
+        'no-async-promise-executor': 'error', // 禁止在 Promise executor 函数中使用 async
+        'no-await-in-loop': 'warn', // 禁止在循环中使用 await
+        'no-cond-assign': ['error', 'always'], // 禁止在条件语句中使用赋值
+        'no-control-regex': 'error', // 禁止正则表达式中的控制字符
+        'no-dupe-else-if': 'error', // 禁止重复的 else-if 条件
+        'no-empty-character-class': 'error', // 禁止正则表达式中的空字符类
+        'no-extra-parens': ['warn', 'all', { conditionalAssign: true, nestedBinaryExpressions: false, returnAssign: false, enforceForArrowConditionals: true }], // 禁止不必要的括号
+        'no-extra-semi': 'error', // 禁止多余的分号
         'no-dupe-args': 'error', // 禁止函数参数重复
         'no-dupe-keys': 'error', // 禁止对象字面量中重复的键
         'no-duplicate-case': 'error', // 禁止 switch 语句中重复的 case
@@ -49,9 +58,15 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'no-prototype-builtins': 'error', // 禁止直接调用 Object.prototype 方法
         'no-regex-spaces': 'error', // 禁止正则表达式中的多个空格
         'no-sparse-arrays': 'error', // 禁止稀疏数组
+        'no-compare-neg-zero': 'error', // 禁止与 -0 比较
+        'no-loss-of-precision': 'error', // 禁止因精度丢失的数字字面量
+        'no-new-native-nonconstructor': 'error', // 禁止对非构造函数使用 new
+        'no-promise-executor-return': 'error', // 禁止在 Promise executor 函数中返回值
+        'no-setter-return': 'error', // 禁止 setter 函数返回值
         'no-template-curly-in-string': 'error', // 禁止在字符串中使用模板字面量占位符
         'no-unexpected-multiline': 'error', // 禁止令人困惑的多行表达式
         'no-unreachable': 'error', // 禁止无法到达的代码
+        'no-unreachable-loop': 'error', // 禁止无法到达的循环
         'no-unsafe-finally': 'error', // 禁止 finally 块中的控制流语句
         'no-unsafe-negation': 'error', // 禁止关系运算符的否定操作符位置不正确
         'use-isnan': 'error', // 要求使用 isNaN() 检查 NaN
@@ -61,9 +76,9 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'accessor-pairs': ['error', { getWithoutSet: false, setWithoutGet: true }], // 强制 getter/setter 成对出现（setter 必须有 getter）
         'array-callback-return': ['error', { allowImplicit: true, checkForEach: false }], // 强制数组方法的回调函数有返回值
         'block-scoped-var': 'error', // 强制变量在块作用域内使用
-        'class-methods-use-this': 'error', // 强制类方法使用 this
-        complexity: ['warn', 20], // 强制代码复杂度不超过 20
-        'consistent-return': 'warn', // 强制 return 语句始终返回或不返回
+        'class-methods-use-this': 'warn', // 强制类方法使用 this
+        complexity: ['error', 20], // 强制代码复杂度不超过 20
+        'consistent-return': 'error', // 强制 return 语句始终返回或不返回
         curly: ['error', 'multi-line'], // 强制多行语句使用大括号，单行允许省略
         'default-case': 'warn', // 强制 switch 语句有 default 分支
         'default-case-last': 'error', // 强制 default 分支在 switch 语句的最后
@@ -89,7 +104,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'no-fallthrough': 'error', // 禁止 switch 语句中的 fallthrough
         'no-floating-decimal': 'error', // 禁止浮点小数
         'no-global-assign': 'error', // 禁止赋值给全局变量
-        'no-implicit-coercion': ['error', { boolean: false, number: true, string: true, allow: [] }], // 禁止隐式类型转换（数字和字符串）
+        'no-implicit-coercion': ['error', { boolean: true, number: true, string: true, allow: [] }], // 禁止隐式类型转换（包括布尔、数字和字符串）
         'no-implied-eval': 'error', // 禁止类似 eval 的方法
         'no-invalid-this': 'warn', // 禁止在类之外使用 this
         'no-iterator': 'error', // 禁用 __iterator__ 属性
@@ -104,7 +119,8 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'no-new-wrappers': 'error', // 禁止使用 new 包装基本类型
         'no-nonoctal-decimal-escape': 'error', // 禁止八进制转义序列
         'no-octal-escape': 'error', // 禁止八进制转义序列
-        'no-param-reassign': ['warn', { props: false }], // 禁止重新分配函数参数（属性除外）
+        'no-param-reassign': ['error', { props: false }], // 禁止重新分配函数参数（属性除外）
+        'no-import-assign': 'error', // 禁止重新分配导入
         'no-proto': 'error', // 禁用 __proto__ 属性
         'no-redeclare': ['error', { builtinGlobals: false }], // 禁止变量重复声明
         'no-restricted-properties': [
@@ -126,13 +142,15 @@ export async function javascript(): Promise<FlatConfigItem[]> {
           },
         ], // 禁止特定的对象属性
         'no-return-assign': ['error', 'except-parens'], // 禁止在 return 语句中赋值（括号内除外）
-        'no-return-await': 'warn', // 禁止不必要的 return await
+        'no-unsafe-optional-chaining': 'error', // 禁止不安全的可选链
+        'no-return-await': 'error', // 禁止不必要的 return await
         'no-script-url': 'error', // 禁止使用 javascript: url
         'no-self-compare': 'error', // 禁止自身比较
         'no-sequences': 'error', // 禁止逗号运算符
         'no-throw-literal': 'error', // 禁止抛出字面量异常
         'no-unmodified-loop-condition': 'warn', // 禁止未修改的循环条件
         'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true, allowTaggedTemplates: true }], // 禁止未使用的表达式（允许短路和三元）
+        'no-useless-backreference': 'error', // 禁止正则表达式中的无用反向引用
         'no-useless-call': 'error', // 禁止不必要的 call() 和 apply()
         'no-useless-catch': 'error', // 禁止不必要的 catch
         'no-useless-concat': 'error', // 禁止不必要的字符串连接
@@ -141,7 +159,8 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'no-warning-comments': 'off', // 禁止特定的警告注释（关闭）
         'prefer-promise-reject-errors': ['error', { allowEmptyReject: true }], // 要求在 Promise.reject 中使用 Error 对象（允许空 reject）
         'prefer-regex-literals': ['error', { disallowRedundantWrapping: true }], // 要求使用正则字面量而不是 RegExp 构造函数
-        'require-await': 'warn', // 禁止使用 async 函数而没有 await
+        'require-await': 'error', // 禁止使用 async 函数而没有 await
+        'require-unicode-regexp': 'off', // 要求正则表达式使用 u 标志
         'vars-on-top': 'warn', // 要求变量声明在顶部
         'wrap-iife': ['error', 'any'], // 要求 IIFE 使用括号包裹
         yoda: 'error', // 要求或禁止 Yoda 条件
@@ -161,7 +180,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
             message: 'Use Number.isNaN instead',
           },
         ], // 禁止特定的全局变量
-        'no-shadow': 'warn', // 禁止变量声明与外层作用域变量同名
+        'no-shadow': 'error', // 禁止变量声明与外层作用域变量同名
         'no-shadow-restricted-names': 'error', // 禁止使用受限名称作为变量名
         'no-undef': 'error', // 禁止使用未声明的变量
         'no-undef-init': 'warn', // 禁止初始化变量为 undefined
@@ -176,6 +195,8 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'no-path-concat': 'error', // 禁止使用 __dirname 和 __filename 进行字符串连接
         'no-process-env': 'warn', // 禁止直接使用 process.env
         'no-process-exit': 'warn', // 禁止使用 process.exit()
+        'no-restricted-modules': 'off', // 禁止特定的模块（关闭）
+        'no-sync': 'warn', // 禁止同步方法
 
         // Stylistic Issues - 代码风格
         'array-bracket-newline': 'off', // 强制数组括号换行（关闭）
@@ -183,7 +204,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'array-element-newline': 'off', // 强制数组元素换行（关闭）
         'block-spacing': ['error', 'always'], // 强制块内空格
         'brace-style': ['error', '1tbs', { allowSingleLine: true }], // 强制大括号风格（1TBS）
-        camelcase: ['error', { properties: 'never', ignoreDestructuring: false }], // 强制使用驼峰命名（属性除外）
+        camelcase: ['error', { properties: 'always', ignoreDestructuring: false }], // 强制使用驼峰命名（包括属性）
         'capitalized-comments': 'off', // 强制注释首字母大写（关闭）
         'comma-dangle': ['error', {
           arrays: 'always-multiline',
@@ -215,12 +236,12 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'linebreak-style': ['error', 'unix'], // 强制换行符风格（Unix）
         'lines-around-comment': 'off', // 强制注释周围空行（关闭）
         'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }], // 强制类成员之间空行
-        'max-depth': 'off', // 强制最大嵌套深度（关闭）
+        'max-depth': ['warn', { max: 4 }], // 强制最大嵌套深度
         'max-len': 'off', // 强制最大行长度（关闭）
         'max-lines': 'off', // 强制文件最大行数（关闭）
         'max-lines-per-function': 'off', // 强制函数最大行数（关闭）
         'max-nested-callbacks': 'off', // 强制最大回调嵌套深度（关闭）
-        'max-params': 'off', // 强制函数最大参数数量（关闭）
+        'max-params': ['warn', { max: 4 }], // 强制函数最大参数数量
         'max-statements': 'off', // 强制函数最大语句数量（关闭）
         'max-statements-per-line': ['error', { max: 1 }], // 强制每行最大语句数量
         'multiline-comment-style': 'off', // 强制多行注释风格（关闭）
@@ -245,7 +266,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
           },
         ], // 禁止混合运算符
         'no-mixed-spaces-and-tabs': 'error', // 禁止混合空格和制表符
-        'no-multi-assign': ['warn'], // 禁止链式变量赋值
+        'no-multi-assign': 'error', // 禁止链式变量赋值
         'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0, maxBOF: 0 }], // 禁止多个空行
         'no-negated-condition': 'off', // 禁止否定条件（关闭）
         'no-nested-ternary': 'error', // 禁止嵌套三元运算符
@@ -283,7 +304,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'padded-blocks': ['error', { blocks: 'never', classes: 'never', switches: 'never' }], // 强制块内填充空行
         'padding-line-between-statements': 'off', // 强制语句间空行（关闭）
         'quote-props': ['error', 'as-needed'], // 强制对象属性引号
-        quotes: ['warn', 'single', { avoidEscape: true, allowTemplateLiterals: true }], // 强制使用单引号
+        quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }], // 强制使用单引号
         semi: ['error', 'always'], // 强制使用分号
         'semi-spacing': ['error', { before: false, after: true }], // 强制分号前后空格
         'semi-style': ['error', 'last'], // 强制分号位置
@@ -336,7 +357,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
           enforceForRenamedProperties: false,
         }], // 要求使用解构
         'prefer-exponentiation-operator': 'error', // 要求使用指数运算符
-        'prefer-named-capture-group': 'off', // 要求使用命名捕获组（关闭）
+        'prefer-named-capture-group': 'warn', // 要求使用命名捕获组（警告）
         'prefer-numeric-literals': 'error', // 要求使用数字字面量
         'prefer-object-has-own': 'error', // 要求使用 Object.hasOwn
         'prefer-object-spread': 'error', // 要求使用对象展开
