@@ -1,5 +1,7 @@
-import { ignores, javascript, typescript } from './configs';
+import { ignores, imports, javascript, typescript } from './configs';
+
 import type { Awaitable, ConfigOptions, FlatConfigItem } from './types';
+import type { Linter } from 'eslint';
 
 /**
  * Create ESLint configuration based on provided options
@@ -18,26 +20,32 @@ import type { Awaitable, ConfigOptions, FlatConfigItem } from './types';
  */
 export async function useConfig(
   options: ConfigOptions = {},
-  ...extraConfigs: Array<Awaitable<FlatConfigItem[]>>
+  ...extraConfigs: Awaitable<FlatConfigItem | FlatConfigItem[] | Linter.Config[]>[]
 ): Promise<FlatConfigItem[]> {
   const {
     ignores: userIgnores = [],
+    imports: enableImports = true,
     typescript: enableTypeScript = true,
   } = options;
 
-  const configs: Array<Awaitable<FlatConfigItem[]>> = [];
+  const configs: Awaitable<FlatConfigItem | FlatConfigItem[] | Linter.Config[]>[] = [];
 
   configs.push(
     ignores(userIgnores),
     javascript()
   );
 
+  // Imports config
+  enableImports && configs.push(imports());
+
   // TypeScript config
   enableTypeScript && configs.push(typescript());
 
+  // Extra configs
   configs.push(...extraConfigs);
 
   const resolvedConfigs = await Promise.all(configs);
+  console.log(resolvedConfigs);
 
   return resolvedConfigs.flat().filter(Boolean);
 }

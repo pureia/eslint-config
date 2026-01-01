@@ -1,5 +1,6 @@
-import type { FlatConfigItem } from '../types';
 import { importDefault } from '../utils';
+
+import type { FlatConfigItem } from '../types';
 
 export async function javascript(): Promise<FlatConfigItem[]> {
   const [

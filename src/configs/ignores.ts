@@ -9,11 +9,9 @@ const EXCLUDES = [
   '**/bun.lockb',
 ];
 
-export function ignores(userIgnores: string[] = []): FlatConfigItem[] {
-  return [
-    {
-      name: 'antfu/ignores',
-      ignores: [...EXCLUDES, ...userIgnores],
-    },
-  ];
+export function ignores(userIgnores: string[] = []): FlatConfigItem {
+  return {
+    name: 'purea/ignores',
+    ignores: [...EXCLUDES, ...userIgnores],
+  };
 }

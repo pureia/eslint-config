@@ -1,4 +1,5 @@
 import { importDefault } from '../utils';
+
 import type { FlatConfigItem } from '../types';
 
 export async function typescript(): Promise<FlatConfigItem[]> {

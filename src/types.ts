@@ -4,6 +4,16 @@ export type Awaitable<T> = T | Promise<T>
 
 /**  Configuration options for the ESLint config */
 export interface ConfigOptions {
+   /**
+   * User ignores patterns
+   * @default []
+   */
+  ignores?: string[]
+  /**
+   * Enable imports rules
+   * @default true
+   */
+  imports?: boolean
   /**
    * Enable TypeScript rules
    * @default true (if TypeScript is detected in the project)
@@ -14,8 +24,6 @@ export interface ConfigOptions {
    * @default false
    */
   browser?: boolean
-  /**  User ignores patterns */
-  ignores?: string[]
 }
 
 export type FlatConfigItem = Omit<Linter.Config, 'plugins'> & {
