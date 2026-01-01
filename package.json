@@ -1,0 +1,32 @@
+{
+  "name": "@purea/eslint-config",
+  "types": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.27.0",
+  "description": "Pure Anin ESLint Config",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "prepublishOnly": "npm run build",
+    "test": "eslint . --config src/index.ts",
+    "lint": "eslint . --ext .ts,.js",
+    "clean": "rimraf dist"
+  },
+  "keywords": [
+    "eslint-config"
+  ],
+  "peerDependencies": {
+    "eslint": "^9.39.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.1",
+    "jiti": "^2.6.1"
+  },
+  "dependencies": {
+    "globals": "^16.5.0"
+  }
+}
