@@ -1,12 +1,3 @@
-// import { useConfig } from './src'
-import { defineConfig } from "eslint/config";
+import { useConfig } from './src';
 
-// export default useConfig({
-//   typescript: true,
-//   node: true
-// })
-
-export default defineConfig({
-  // typescript: true,
-  // node: true
-})
+export default useConfig();

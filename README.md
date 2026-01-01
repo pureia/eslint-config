@@ -1,9 +1,6 @@
-# ESLint Config
+# @purea/eslint-config
 
 A comprehensive, opinionated ESLint configuration library for modern JavaScript and TypeScript projects.
-
-[![npm version](https://badge.fury.io/js/@your-username%2Feslint-config.svg)](https://badge.fury.io/js/@your-username%2Feslint-config)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Features
 
@@ -14,11 +11,16 @@ A comprehensive, opinionated ESLint configuration library for modern JavaScript 
 - 📦 **Modern**: Uses latest ESLint flat config format
 - 🚀 **Performance**: Optimized for speed and efficiency
 - 🎨 **Consistent**: Enforces consistent code style across your project
+- 🛠️ **Extensible**: Easy to customize and extend
 
 ## Installation
 
 ```bash
-npm install --save-dev @your-username/eslint-config
+npm install --save-dev @purea/eslint-config
+# or
+pnpm add -D @purea/eslint-config
+# or
+yarn add -D @purea/eslint-config
 ```
 
 ## Usage
@@ -28,7 +30,7 @@ npm install --save-dev @your-username/eslint-config
 Create an `eslint.config.js` file in your project root:
 
 ```javascript
-import config from '@your-username/eslint-config'
+import config from '@purea/eslint-config'
 
 export default config
 ```
@@ -38,13 +40,43 @@ export default config
 You can customize the configuration based on your project needs:
 
 ```javascript
-import { createConfig } from '@your-username/eslint-config'
+import { useConfig } from '@purea/eslint-config'
 
-export default createConfig({
+export default useConfig({
   typescript: true,  // Enable TypeScript rules
   react: true,       // Enable React rules
-  node: false        // Disable Node.js rules
+  node: true,        // Enable Node.js rules
+  browser: true,     // Enable browser environment
 })
+```
+
+### Using Preset Configurations
+
+We provide several preset configurations for common use cases:
+
+```javascript
+import {
+  typescriptConfig,
+  reactConfig,
+  nodeConfig,
+  browserConfig,
+  fullConfig
+} from '@purea/eslint-config'
+
+// TypeScript project
+export default typescriptConfig()
+
+// React project
+export default reactConfig()
+
+// Node.js project
+export default nodeConfig()
+
+// Browser project
+export default browserConfig()
+
+// Full-featured configuration
+export default fullConfig()
 ```
 
 ### Using Individual Configs
@@ -52,12 +84,13 @@ export default createConfig({
 You can also import individual configurations:
 
 ```javascript
-import { javascript, typescript, react, node } from '@your-username/eslint-config'
+import { javascript, typescript, react, node } from '@purea/eslint-config'
 
 export default [
   javascript,
   typescript,
   react,
+  node,
   {
     // Your custom rules
     rules: {
@@ -67,6 +100,26 @@ export default [
 ]
 ```
 
+### Custom Rules and Ignores
+
+```javascript
+import { useConfig } from '@purea/eslint-config'
+
+export default useConfig({
+  typescript: true,
+  react: true,
+  rules: {
+    'no-console': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off'
+  },
+  ignores: [
+    'dist',
+    'node_modules',
+    '*.config.js'
+  ]
+})
+```
+
 ## Configuration Options
 
 | Option | Type | Default | Description |
@@ -74,41 +127,69 @@ export default [
 | `typescript` | `boolean` | `true` | Enable TypeScript-specific rules |
 | `react` | `boolean` | `false` | Enable React-specific rules |
 | `node` | `boolean` | `false` | Enable Node.js-specific rules |
+| `browser` | `boolean` | `false` | Enable browser environment globals |
+| `rules` | `object` | `{}` | Custom rules to override or extend defaults |
+| `ignores` | `string[]` | `[]` | Custom ignore patterns |
 
 ## Available Configs
 
-- `javascript` - Base JavaScript rules
-- `typescript` - TypeScript-specific rules
-- `react` - React and JSX rules
-- `node` - Node.js environment rules
-- `recommended` - Default configuration with sensible defaults
-- `strict` - Strict configuration with all rules enabled
+- `javascript` - Base JavaScript rules with modern ES6+ syntax
+- `typescript` - TypeScript-specific rules with strict type checking
+- `react` - React and JSX rules with hooks and accessibility
+- `node` - Node.js environment rules and best practices
 
 ## Rules Overview
 
 ### JavaScript Rules
+
+The JavaScript configuration includes:
+
+- **Possible Errors**: Catches common programming errors
+- **Best Practices**: Enforces modern JavaScript best practices
+- **Variables**: Proper variable declaration and usage
+- **Node.js**: Node.js specific patterns and globals
+- **Stylistic Issues**: Consistent code style and formatting
+- **ES6**: Modern ES6+ syntax and features
+
+Key features:
 - Enforces modern ES6+ syntax
 - Prevents common programming errors
 - Enforces consistent code style
 - Optimizes for performance
+- Supports both CommonJS and ES modules
 
 ### TypeScript Rules
-- Strict type checking
+
+The TypeScript configuration includes:
+
+- Strict type checking rules
 - Consistent interface usage
 - Proper generic constraints
 - Advanced type safety
+- Naming conventions
+- Explicit return types
+- No `any` types (auto-fixes to `unknown`)
 
 ### React Rules
+
+The React configuration includes:
+
 - JSX best practices
 - Accessibility (a11y) compliance
 - Hooks rules enforcement
 - Component optimization
+- Proper prop types
+- No deprecated patterns
 
 ### Node.js Rules
+
+The Node.js configuration includes:
+
 - Proper error handling
 - Async/await patterns
 - File system best practices
 - Environment-specific globals
+- No synchronous operations warnings
 
 ## Examples
 
@@ -116,11 +197,12 @@ export default [
 
 ```javascript
 // eslint.config.js
-import { createConfig } from '@your-username/eslint-config'
+import { useConfig } from '@purea/eslint-config'
 
-export default createConfig({
+export default useConfig({
   typescript: true,
-  react: true
+  react: true,
+  browser: true
 })
 ```
 
@@ -128,12 +210,10 @@ export default createConfig({
 
 ```javascript
 // eslint.config.js
-import { createConfig } from '@your-username/eslint-config'
+import { nodeConfig } from '@purea/eslint-config'
 
-export default createConfig({
-  typescript: true,
-  node: true,
-  react: false
+export default nodeConfig({
+  typescript: true
 })
 ```
 
@@ -141,33 +221,22 @@ export default createConfig({
 
 ```javascript
 // eslint.config.js
-import config from '@your-username/eslint-config'
+import config from '@purea/eslint-config'
 
 export default config
 ```
 
-## Customization
-
-You can extend or override any rules:
+### Full-Stack Application
 
 ```javascript
 // eslint.config.js
-import { createConfig } from '@your-username/eslint-config'
+import { fullConfig } from '@purea/eslint-config'
 
-const baseConfig = createConfig({
-  typescript: true,
-  react: true
-})
-
-export default [
-  ...baseConfig,
-  {
-    rules: {
-      'no-console': 'off',
-      '@typescript-eslint/explicit-function-return-type': 'off'
-    }
+export default fullConfig({
+  rules: {
+    'no-console': 'off'
   }
-]
+})
 ```
 
 ## Peer Dependencies
@@ -176,25 +245,50 @@ This config requires the following peer dependencies:
 
 ```json
 {
-  "eslint": "^8.0.0 || ^9.0.0",
-  "typescript": "^4.0.0 || ^5.0.0"
+  "eslint": "^9.39.1",
+  "typescript": ">=5.0.0"
 }
 ```
+
+Note: TypeScript is optional and will only be used if installed in your project.
 
 ## Development
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Build the project
-npm run build
+pnpm run build
 
 # Run tests
-npm test
+pnpm test
 
 # Lint the code
-npm run lint
+pnpm run lint
+
+# Watch mode for development
+pnpm run dev
+
+# Clean build artifacts
+pnpm run clean
+```
+
+## Project Structure
+
+```
+eslint-config/
+├── src/
+│   ├── index.ts           # Main entry point
+│   ├── configs/
+│   │   ├── javascript.ts  # JavaScript base configuration
+│   │   ├── typescript.ts  # TypeScript configuration
+│   │   ├── react.ts       # React configuration
+│   │   └── node.ts        # Node.js configuration
+│   └── factory.ts         # Configuration factory utilities
+├── eslint.config.ts       # Project's own ESLint config
+├── tsdown.config.ts       # Build configuration
+└── tsconfig.json          # TypeScript configuration
 ```
 
 ## Contributing
