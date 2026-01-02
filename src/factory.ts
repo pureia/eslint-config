@@ -1,6 +1,6 @@
 import type { Linter } from 'eslint';
 import type { Awaitable, ConfigOptions, FlatConfigItem } from './types';
-import { ignores, imports, javascript, typescript, stylistic } from './configs';
+import { ignores, imports, javascript, typescript, stylistic, jsonc } from './configs';
 
 /**
  * Create ESLint configuration based on provided options
@@ -25,6 +25,7 @@ export async function useConfig(
     ignores: userIgnores = [],
     imports: enableImports = true,
     typescript: enableTypeScript = true,
+    jsonc: enableJsonc = true,
   } = options;
 
   const configs: Awaitable<FlatConfigItem | FlatConfigItem[] | Linter.Config[]>[] = [];
@@ -40,6 +41,9 @@ export async function useConfig(
 
   // TypeScript config
   enableTypeScript && configs.push(typescript());
+
+  // JSONC config
+  enableJsonc && configs.push(jsonc());
 
   // Extra configs
   configs.push(...extraConfigs);

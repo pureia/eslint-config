@@ -3,3 +3,4 @@ export * from './imports';
 export * from './javascript';
 export * from './typescript';
 export * from './stylistic';
+export * from './jsonc';

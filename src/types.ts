@@ -23,10 +23,10 @@ export interface ConfigOptions {
    */
   typescript?: boolean
   /**
-   * Enable browser environment globals
-   * @default false
+   * Enable JSONC rules
+   * @default true
    */
-  browser?: boolean
+  jsonc?: boolean
 }
 
 export type FlatConfigItem = Omit<Linter.Config, 'plugins'> & {

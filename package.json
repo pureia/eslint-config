@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsdown --clean --dts",
     "dev": "tsdown --watch",
-    "lint": "eslint . --ext .ts,.js --fix"
+    "lint": "eslint --fix"
   },
   "keywords": [
     "eslint-config"
@@ -32,6 +32,8 @@
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint-plugin-import": "^2.31.0",
-    "globals": "^16.5.0"
+    "eslint-plugin-jsonc": "^2.21.0",
+    "globals": "^16.5.0",
+    "jsonc-eslint-parser": "^2.4.2"
   }
 }
