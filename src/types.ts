@@ -1,13 +1,16 @@
 import type { Linter } from 'eslint';
 
-export type Awaitable<T> = T | Promise<T>
+/**
+ * A type that represents a value that can be either a Promise of T or T itself.
+*/
+export type Awaitable<T> = Promise<T> | T;
 
 /**  Configuration options for the ESLint config */
 export interface ConfigOptions {
-   /**
-   * User ignores patterns
-   * @default []
-   */
+  /**
+  * User ignores patterns
+  * @default []
+  */
   ignores?: string[]
   /**
    * Enable imports rules
