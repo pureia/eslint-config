@@ -37,4 +37,4 @@ export type FlatConfigItem = Omit<Linter.Config, 'plugins'> & {
    * @see [Using plugins in your configuration](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration)
    */
   plugins?: Record<string, unknown>
-}
+};

@@ -21,9 +21,7 @@ export async function typescript(): Promise<FlatConfigItem[]> {
           sourceType: 'module',
         },
       },
-      plugins: {
-        '@typescript-eslint': tsPlugin,
-      },
+      plugins: { '@typescript-eslint': tsPlugin },
     },
     {
       name: 'purea/typescript/rules',
