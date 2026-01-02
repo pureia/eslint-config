@@ -36,9 +36,9 @@ import config from '@purea/eslint-config'
 export default config()
 ```
 
-这将使用默认配置，启用 TypeScript 和导入规则。
+这将使用默认配置，自动启用 JavaScript、Stylistic、TypeScript 和导入规则。
 
-This uses the default configuration with TypeScript and import rules enabled.
+This uses the default configuration with JavaScript, Stylistic, TypeScript, and import rules enabled.
 
 ### 高级用法 Advanced Usage
 
@@ -54,6 +54,8 @@ export default config({
 })
 ```
 
+**注意**：`stylistic`（代码风格规则）默认启用，无法通过配置选项禁用。
+
 ### 直接使用 useConfig Using useConfig Directly
 
 ```javascript
@@ -65,14 +67,17 @@ export default useConfig({
 })
 ```
 
+JavaScript 和 Stylistic 配置默认启用，无需额外配置。
+
 ### 使用独立配置 Using Individual Configs
 
 ```javascript
-import { javascript, typescript, imports, ignores } from '@purea/eslint-config'
+import { javascript, typescript, imports, stylistic, ignores } from '@purea/eslint-config'
 
 export default [
   ignores(['dist', 'node_modules']),
   javascript(),
+  stylistic(),
   typescript(),
   imports(),
   {
@@ -97,7 +102,8 @@ export default useConfig({
   // 额外配置
   rules: {
     'no-console': 'off',
-    '@typescript-eslint/no-explicit-any': 'off'
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@stylistic/quotes': 'off'  // 覆盖默认的stylistic规则
   }
 })
 ```
@@ -109,7 +115,6 @@ export default useConfig({
 | `typescript` | `boolean` | `true` | 启用 TypeScript 特定规则 |
 | `imports` | `boolean` | `true` | 启用导入组织规则 |
 | `ignores` | `string[]` | `[]` | 自定义忽略模式 |
-| `browser` | `boolean` | `false` | 启用浏览器环境全局变量（暂未实现） |
 
 ## 📋 可用配置 Available Configs
 
@@ -118,7 +123,10 @@ export default useConfig({
 - `javascript()` - 基础 JavaScript 规则，支持现代 ES6+ 语法（350+ 规则）
 - `typescript()` - TypeScript 特定规则，包含类型检查
 - `imports()` - 导入组织和依赖管理规则
+- `stylistic()` - 代码风格规则，基于 @stylistic/eslint-plugin（100+ 规则）
 - `ignores(patterns)` - 文件和目录忽略模式（同步函数）
+
+**注意**：`javascript()` 和 `stylistic()` 配置默认启用，无法通过配置选项禁用。
 
 ## 📝 规则概览 Rules Overview
 
@@ -143,22 +151,53 @@ JavaScript 配置包含 350+ 条规则，涵盖：
 - `no-unused-vars` (warn): 禁止未使用的变量
 - `no-shadow` (warn): 禁止变量遮蔽
 
-**代码风格 Stylistic Issues**
-- 一致的代码风格和格式
-- `quotes` (warn): 强制使用单引号
-- `semi` (error): 要求使用分号
-- `comma-dangle` (error): 强制在多行中使用尾随逗号
-
-**ES6+ 特性**
-- 现代 ES6+ 语法和特性
-- `no-var` (error): 禁止使用 `var`
-- `prefer-arrow-callback` (error): 回调函数优先使用箭头函数
-- `prefer-template` (error): 优先使用模板字符串而非字符串拼接
-
 **环境支持 Environment Support**
 - Node.js 全局变量
 - ES2023 全局变量
 - 浏览器全局变量（window, document, navigator）
+
+### Stylistic 规则 Stylistic Rules
+
+Stylistic 配置基于 `@stylistic/eslint-plugin`，包含 100+ 条代码风格规则：
+
+**数组规则 Array Rules**
+- `@stylistic/array-bracket-spacing`: 强制数组括号内无空格
+- `@stylistic/array-element-newline`: 控制数组元素换行
+
+**箭头函数规则 Arrow Function Rules**
+- `@stylistic/arrow-parens`: 强制箭头函数参数使用括号
+- `@stylistic/arrow-spacing`: 强制箭头函数箭头前后空格
+
+**块规则 Block Rules**
+- `@stylistic/block-spacing`: 强制块内空格
+- `@stylistic/brace-style`: 强制大括号风格（1TBS）
+
+**逗号规则 Comma Rules**
+- `@stylistic/comma-dangle`: 强制在多行中使用尾随逗号
+- `@stylistic/comma-spacing`: 强制逗号前后空格
+
+**缩进规则 Indent Rules**
+- `@stylistic/indent`: 强制缩进为2空格
+- 支持多种代码结构的智能缩进
+
+**引号规则 Quotes Rules**
+- `@stylistic/quotes`: 强制使用单引号
+- `@stylistic/quote-props`: 强制对象属性引号
+
+**分号规则 Semi Rules**
+- `@stylistic/semi`: 强制使用分号
+- `@stylistic/semi-spacing`: 强制分号前后空格
+
+**空格规则 Space Rules**
+- `@stylistic/space-before-blocks`: 强制块前空格
+- `@stylistic/space-infix-ops`: 强制运算符周围空格
+- `@stylistic/space-before-function-paren`: 强制函数括号前空格
+
+**其他规则 Other Rules**
+- `@stylistic/max-len`: 强制最大行长度为120
+- `@stylistic/no-trailing-spaces`: 禁止行尾空格
+- `@stylistic/no-tabs`: 禁止制表符
+- `@stylistic/linebreak-style`: 强制换行符风格（Unix）
 
 ### TypeScript 规则 TypeScript Rules
 
@@ -233,20 +272,24 @@ export default useConfig({
   // 覆盖特定规则
   rules: {
     'no-console': 'off',
-    '@typescript-eslint/no-explicit-any': 'off'
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@stylistic/quotes': 'off'  // 禁用特定的代码风格规则
   }
 })
 ```
+
+JavaScript 和 Stylistic 配置默认启用，但可以通过规则覆盖来自定义特定规则。
 
 ### 使用独立配置函数
 
 ```javascript
 // eslint.config.js
-import { javascript, typescript, imports, ignores } from '@purea/eslint-config'
+import { javascript, typescript, imports, stylistic, ignores } from '@purea/eslint-config'
 
 export default [
   ignores(['dist', 'node_modules']),
   javascript(),
+  stylistic(),
   typescript(),
   imports(),
   {
@@ -289,9 +332,14 @@ export default useConfig({
   imports: true,
 }, {
   // 自定义配置
-  rules: { 'no-console': 'off' }
+  rules: {
+    'no-console': 'off',
+    '@stylistic/quotes': 'off'  // 可以覆盖默认的stylistic规则
+  }
 })
 ```
+
+JavaScript 和 Stylistic 配置默认启用，TypeScript 和 Imports 配置可通过选项控制。
 
 ## 📦 依赖 Dependencies
 
@@ -311,13 +359,15 @@ export default useConfig({
 ### 运行时依赖 Runtime Dependencies
 - `globals`: 提供全局变量定义
 - `eslint-plugin-import`: 导入组织规则
+- `@stylistic/eslint-plugin`: 代码风格规则
+- `@typescript-eslint/eslint-plugin`: TypeScript 规则
+- `@typescript-eslint/parser`: TypeScript 解析器
 
 ### 开发依赖 Development Dependencies
 - `eslint@^9.39.1`: ESLint 核心
-- `@typescript-eslint/parser`: TypeScript 解析器
-- `@typescript-eslint/eslint-plugin`: TypeScript 规则
 - `tsdown`: 构建工具
 - `jiti`: TypeScript 运行时加载器
+- `typescript`: TypeScript 编译器
 
 ## 🛠️ 开发 Development
 
@@ -348,6 +398,7 @@ eslint-config/
 │       ├── ignores.ts      # 忽略模式
 │       ├── imports.ts     # 导入规则
 │       ├── javascript.ts  # JavaScript 基础规则
+│       ├── stylistic.ts   # 代码风格规则
 │       └── typescript.ts  # TypeScript 规则
 ├── eslint.config.ts       # 项目自身的 ESLint 配置
 ├── tsdown.config.ts       # 构建配置
