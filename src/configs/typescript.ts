@@ -83,7 +83,7 @@ export async function typescript(): Promise<FlatConfigItem[]> {
         '@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports', disallowTypeAnnotations: false }], // 类型导入使用 import type
         '@typescript-eslint/default-param-last': 'warn', // 默认参数应放在参数列表最后
         '@typescript-eslint/dot-notation': 'warn', // 优先使用 obj.prop 而非 obj['prop']
-        '@typescript-eslint/explicit-function-return-type': 'off', // 不要求显式声明函数返回类型
+        '@typescript-eslint/explicit-function-return-type': ['warn', { allowExpressions: true, allowTypedFunctionExpressions: true, allowHigherOrderFunctions: true, allowDirectConstAssertionInArrowFunctions: true, allowConciseArrowFunctionExpressionsStartingWithVoid: false }], // 要求显式声明函数返回类型（警告级别，允许表达式）
         '@typescript-eslint/explicit-member-accessibility': ['warn', { accessibility: 'no-public' }], // 类成员应显式声明可访问性（public 除外）
         '@typescript-eslint/explicit-module-boundary-types': 'warn', // 导出的函数和类应显式声明类型
         '@typescript-eslint/init-declarations': 'off', // 不要求变量声明时初始化
@@ -105,7 +105,7 @@ export async function typescript(): Promise<FlatConfigItem[]> {
             format: ['camelCase'],
             leadingUnderscore: 'allow',
           },
-          // 类属性：驼峰或大写常量，私有属性必须前缀下划线
+          // 类属性：驼峰或大写常量，私有属性建议前缀下划线
           {
             selector: 'classProperty',
             format: ['camelCase', 'UPPER_CASE'],
@@ -116,9 +116,9 @@ export async function typescript(): Promise<FlatConfigItem[]> {
             selector: 'classProperty',
             modifiers: ['private', 'protected'],
             format: ['camelCase'],
-            leadingUnderscore: 'require',
+            leadingUnderscore: 'allow',
           },
-          // 类方法：驼峰命名，私有方法必须前缀下划线
+          // 类方法：驼峰命名，私有方法建议前缀下划线
           {
             selector: 'classMethod',
             format: ['camelCase'],
@@ -128,7 +128,7 @@ export async function typescript(): Promise<FlatConfigItem[]> {
             selector: 'classMethod',
             modifiers: ['private', 'protected'],
             format: ['camelCase'],
-            leadingUnderscore: 'require',
+            leadingUnderscore: 'allow',
           },
           // 访问器：驼峰命名
           {
@@ -234,7 +234,7 @@ export async function typescript(): Promise<FlatConfigItem[]> {
         '@typescript-eslint/return-await': ['error', 'in-try-catch'], // try-catch 中必须 await 返回的 Promise
         '@typescript-eslint/switch-exhaustiveness-check': 'warn', // switch 语句应处理所有枚举值
         '@typescript-eslint/triple-slash-reference': ['warn', { lib: 'never', path: 'never', types: 'never' }], // 禁止使用三斜杠引用（应使用 import）
-        '@typescript-eslint/typedef': 'off', // 不要求显式类型声明
+        '@typescript-eslint/typedef': ['warn', { arrayDestructuring: false, arrowParameter: false, memberVariableDeclaration: false, objectDestructuring: false, parameter: false, propertyDeclaration: false, variableDeclaration: false, variableDeclarationIgnoreFunction: true }], // 要求显式类型声明（警告级别，灵活配置）
         '@typescript-eslint/unbound-method': ['warn', { ignoreStatic: true }], // 引用类方法时警告（可能需要绑定 this）
         '@typescript-eslint/unified-signatures': 'warn', // 合并可以统一的函数重载签名
         '@typescript-eslint/use-unknown-in-catch-callback-variable': 'warn', // catch 回调参数应使用 unknown 而非 any

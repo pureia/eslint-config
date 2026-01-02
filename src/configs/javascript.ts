@@ -30,7 +30,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
       name: 'purea/javascript/rules',
       rules: {
         // Possible Errors - 可能的错误
-        'no-console': 'warn', // 禁用 console
+        'no-console': 'warn', // 禁用 console, 警告级别
         'no-debugger': 'error', // 禁用 debugger 语句
         'no-alert': 'warn', // 禁用 alert，警告级别
         'no-constant-condition': ['warn', { checkLoops: false }], // 禁用常量条件表达式（循环中除外）
@@ -42,7 +42,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'no-control-regex': 'error', // 禁止正则表达式中的控制字符
         'no-dupe-else-if': 'error', // 禁止重复的 else-if 条件
         'no-empty-character-class': 'error', // 禁止正则表达式中的空字符类
-        'no-extra-parens': ['warn', 'all', { conditionalAssign: true, nestedBinaryExpressions: false, returnAssign: false, enforceForArrowConditionals: true }], // 禁止不必要的括号
+        'no-extra-parens': ['warn', 'all', { conditionalAssign: true, nestedBinaryExpressions: false, returnAssign: false, enforceForArrowConditionals: true }], // 禁止不必要的括号, 警告级别
         'no-extra-semi': 'error', // 禁止多余的分号
         'no-dupe-args': 'error', // 禁止函数参数重复
         'no-dupe-keys': 'error', // 禁止对象字面量中重复的键
@@ -77,7 +77,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'array-callback-return': ['error', { allowImplicit: true, checkForEach: false }], // 强制数组方法的回调函数有返回值
         'block-scoped-var': 'error', // 强制变量在块作用域内使用
         'class-methods-use-this': 'warn', // 强制类方法使用 this
-        complexity: ['error', 20], // 强制代码复杂度不超过 20
+        complexity: ['warn', 25], // 强制代码复杂度不超过 25（调整为警告级别）
         'consistent-return': 'error', // 强制 return 语句始终返回或不返回
         curly: ['error', 'multi-line'], // 强制多行语句使用大括号，单行允许省略
         'default-case': 'warn', // 强制 switch 语句有 default 分支
@@ -88,7 +88,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         eqeqeq: ['error', 'always', { null: 'ignore' }], // 强制使用 === 和 !==（null 除外）
         'grouped-accessor-pairs': 'error', // 强制 getter/setter 分组在一起
         'guard-for-in': 'warn', // 强制 for-in 循环中包含 if 语句
-        'max-classes-per-file': ['warn', 1], // 强制每个文件最多 1 个类
+        'max-classes-per-file': 'off', // 强制每个文件最多 1 个类（关闭，更灵活）
         'no-caller': 'error', // 禁用 arguments.caller 和 arguments.callee
         'no-case-declarations': 'error', // 禁止在 case 子句中声明变量
         'no-constructor-return': 'error', // 禁止在构造函数中返回值
@@ -104,7 +104,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'no-fallthrough': 'error', // 禁止 switch 语句中的 fallthrough
         'no-floating-decimal': 'error', // 禁止浮点小数
         'no-global-assign': 'error', // 禁止赋值给全局变量
-        'no-implicit-coercion': ['error', { boolean: true, number: true, string: true, allow: [] }], // 禁止隐式类型转换（包括布尔、数字和字符串）
+        'no-implicit-coercion': ['warn', { boolean: true, number: true, string: true, allow: ['!!', '+'] }], // 禁止隐式类型转换（警告级别，允许常见模式）
         'no-implied-eval': 'error', // 禁止类似 eval 的方法
         'no-invalid-this': 'warn', // 禁止在类之外使用 this
         'no-iterator': 'error', // 禁用 __iterator__ 属性
@@ -169,17 +169,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'init-declarations': 'off', // 要求或禁止变量声明初始化（关闭）
         'no-delete-var': 'error', // 禁止删除变量
         'no-label-var': 'error', // 禁止标签变量名与作用域内变量同名
-        'no-restricted-globals': [
-          'error',
-          {
-            name: 'isFinite',
-            message: 'Use Number.isFinite instead',
-          },
-          {
-            name: 'isNaN',
-            message: 'Use Number.isNaN instead',
-          },
-        ], // 禁止特定的全局变量
+        'no-restricted-globals': 'off', // 禁止特定的全局变量（关闭，避免与no-restricted-properties重复）
         'no-shadow': 'error', // 禁止变量声明与外层作用域变量同名
         'no-shadow-restricted-names': 'error', // 禁止使用受限名称作为变量名
         'no-undef': 'error', // 禁止使用未声明的变量
