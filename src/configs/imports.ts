@@ -11,7 +11,13 @@ export async function imports(): Promise<FlatConfigItem[]> {
     {
       name: 'purea/imports',
       plugins: { import: importPlugin },
-      settings: { 'import/resolver': { node: { extensions: ['.js', '.jsx', '.ts', '.tsx'] } } },
+      settings: {
+        'import/resolver': {
+          node: {
+            extensions: ['.js', '.jsx', '.ts', '.tsx'],
+          },
+        },
+      },
     },
     {
       name: 'purea/imports/rules',

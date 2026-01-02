@@ -10,7 +10,7 @@ export async function stylistic(): Promise<FlatConfigItem[]> {
 
   return [
     {
-      name: 'purea/javascript/stylistic',
+      name: 'purea/stylistic',
       plugins: { '@stylistic': plugin },
       rules: {
         // Array Rules - 数组相关规则
@@ -207,7 +207,7 @@ export async function stylistic(): Promise<FlatConfigItem[]> {
         '@stylistic/nonblock-statement-body-position': ['error', 'beside'], // 强制非块语句的位置
 
         // Object Rules - 对象相关规则
-        '@stylistic/object-curly-newline': ['error', { multiline: true }], // 强制对象大括号换行
+        '@stylistic/object-curly-newline': ['warn', { multiline: true, consistent: true }], // 强制对象大括号换行
         '@stylistic/object-curly-spacing': ['error', 'always'], // 强制对象大括号内空格
         '@stylistic/object-property-newline': 'off', // 强制对象属性换行（关闭）
 
