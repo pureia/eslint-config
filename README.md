@@ -36,9 +36,9 @@ import config from '@purea/eslint-config'
 export default config()
 ```
 
-这将使用默认配置，自动启用 JavaScript、Stylistic、TypeScript 和导入规则。
+这将使用默认配置，自动启用 JavaScript、Stylistic、TypeScript、JSONC、Vue 和导入规则。
 
-This uses the default configuration with JavaScript, Stylistic, TypeScript, and import rules enabled.
+This uses the default configuration with JavaScript, Stylistic, TypeScript, JSONC, Vue, and import rules enabled.
 
 ### 高级用法 Advanced Usage
 
@@ -50,6 +50,8 @@ import config from '@purea/eslint-config'
 export default config({
   typescript: true,      // 启用 TypeScript 规则
   imports: true,         // 启用导入规则
+  jsonc: true,           // 启用 JSONC 规则
+  vue: true,             // 启用 Vue 规则
   ignores: ['dist', 'build'],  // 自定义忽略模式
 })
 ```
@@ -112,8 +114,10 @@ export default useConfig({
 
 | 选项 Option | 类型 Type | 默认值 Default | 描述 Description |
 |------------|---------|---------------|-----------------|
-| `typescript` | `boolean` | `true` | 启用 TypeScript 特定规则 |
+| `typescript` | `boolean \| object` | `auto` | 启用 TypeScript 特定规则，自动检测 TypeScript 是否安装 |
 | `imports` | `boolean` | `true` | 启用导入组织规则 |
+| `jsonc` | `boolean` | `true` | 启用 JSON/JSONC 文件规则 |
+| `vue` | `boolean \| object` | `auto` | 启用 Vue.js 特定规则，自动检测 Vue 是否安装 |
 | `ignores` | `string[]` | `[]` | 自定义忽略模式 |
 
 ## 📋 可用配置 Available Configs
@@ -124,6 +128,8 @@ export default useConfig({
 - `typescript()` - TypeScript 特定规则，包含类型检查
 - `imports()` - 导入组织和依赖管理规则
 - `stylistic()` - 代码风格规则，基于 @stylistic/eslint-plugin（100+ 规则）
+- `jsonc()` - JSON/JSONC 文件规则
+- `vue()` - Vue.js 特定规则
 - `ignores(patterns)` - 文件和目录忽略模式（同步函数）
 
 **注意**：`javascript()` 和 `stylistic()` 配置默认启用，无法通过配置选项禁用。
@@ -228,6 +234,22 @@ TypeScript 配置包含：
 - `import/no-extraneous-dependencies` (error): 防止导入额外的依赖
 - `import/no-cycle` (warn): 对循环依赖发出警告
 
+### JSONC 规则 JSONC Rules
+
+JSONC 配置包含 JSON 和 JSONC 文件的规则：
+
+- 支持 `.json`、`.jsonc`、`.json5` 文件
+- 确保有效的 JSON 语法
+- 强制一致的 JSON 格式
+
+### Vue 规则 Vue Rules
+
+Vue 配置包含 Vue.js 特定规则：
+
+- 支持 `.vue` 单文件组件
+- Vue 3 Composition API 支持
+- 与 TypeScript 集成（当启用 TypeScript 时）
+
 ### 忽略模式 Ignore Patterns
 
 默认忽略模式包括：
@@ -280,11 +302,25 @@ export default useConfig({
 
 JavaScript 和 Stylistic 配置默认启用，但可以通过规则覆盖来自定义特定规则。
 
+### Vue 项目
+
+```javascript
+// eslint.config.js
+import { useConfig } from '@purea/eslint-config'
+
+export default useConfig({
+  typescript: true,
+  imports: true,
+  vue: true,
+  jsonc: true
+})
+```
+
 ### 使用独立配置函数
 
 ```javascript
 // eslint.config.js
-import { javascript, typescript, imports, stylistic, ignores } from '@purea/eslint-config'
+import { javascript, typescript, imports, stylistic, ignores, jsonc, vue } from '@purea/eslint-config'
 
 export default [
   ignores(['dist', 'node_modules']),
@@ -292,6 +328,8 @@ export default [
   stylistic(),
   typescript(),
   imports(),
+  jsonc(),
+  vue(),
   {
     rules: {
       'no-console': 'off'

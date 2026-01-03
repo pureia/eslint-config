@@ -69,7 +69,7 @@ typings/
 .nuxt
 
 # Nuxt generate
-dist
+# dist - needed for npm package distribution
 
 # Serverless directories
 .serverless
