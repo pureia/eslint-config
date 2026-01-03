@@ -59,20 +59,7 @@ export async function stylistic(): Promise<FlatConfigItem[]> {
         '@stylistic/implicit-arrow-linebreak': ['error', 'beside'], // 强制箭头函数的箭头与参数在同一行
 
         // Indent Rules - 缩进相关规则
-        '@stylistic/indent': ['error', 2, {
-          SwitchCase: 1,
-          VariableDeclarator: 'first',
-          MemberExpression: 1,
-          FunctionDeclaration: { parameters: 'first' },
-          FunctionExpression: { parameters: 'first' },
-          CallExpression: { arguments: 'first' },
-          ArrayExpression: 'first',
-          ObjectExpression: 'first',
-          ImportDeclaration: 'first',
-          flatTernaryExpressions: false,
-          ignoredNodes: ['TemplateLiteral *'],
-          offsetTernaryExpressions: true,
-        }], // 强制缩进为2空格
+        '@stylistic/indent': ['error', 2], // 强制缩进为2空格
         '@stylistic/indent-binary-ops': 'off', // 强制二元运算符缩进（关闭）
 
         // JSX Rules - JSX相关规则
