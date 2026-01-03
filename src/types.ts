@@ -1,7 +1,7 @@
 import type { Linter } from 'eslint';
 
 /**
- * A type that represents a value that can be either a Promise of T or T itself.
+  * A type that represents a value that can be either a Promise of T or T itself.
 */
 export type Awaitable<T> = Promise<T> | T;
 
@@ -27,6 +27,11 @@ export interface ConfigOptions {
    * @default true
    */
   jsonc?: boolean
+  /**
+   * Enable Vue rules
+   * @default true (if Vue is detected in the project)
+   */
+  vue?: boolean | VueOptions
 }
 
 export type FlatConfigItem = Omit<Linter.Config, 'plugins'> & {
@@ -54,4 +59,24 @@ interface OptionsTypeScriptWithTypes {
    * Override type aware rules.
    */
   overridesTypeAwareRules?: FlatConfigItem['rules']
+}
+
+/** Vue options. */
+export interface VueOptions {
+  /**
+   * Vue version
+   * @default 3
+   */
+  vueVersion?: 2 | 3
+
+  /**
+   * Override Vue-specific rules.
+   */
+  overridesRules?: FlatConfigItem['rules']
+
+  /**
+   * Enable TypeScript rules for Vue SFC
+   * @default false
+   */
+  typescript?: boolean
 }

@@ -2,9 +2,7 @@ import { useConfig } from './src';
 
 export default useConfig(
   {
-    typescript: {
-      tsconfigPath: './tsconfig.json',
-    },
+    typescript: { tsconfigPath: './tsconfig.json' },
   },
   {
     rules: {

@@ -2,7 +2,7 @@ import type { Linter } from 'eslint';
 import type { Awaitable, ConfigOptions, FlatConfigItem } from './types';
 
 import { isPackageExists } from 'local-pkg';
-import { ignores, imports, javascript, typescript, stylistic, jsonc } from './configs';
+import { ignores, imports, javascript, typescript, stylistic, jsonc, vue } from './configs';
 import { isObject } from './utils';
 
 /**
@@ -29,6 +29,7 @@ export async function useConfig(
     imports: enableImports = true,
     typescript: enableTypeScript = isPackageExists('typescript'),
     jsonc: enableJsonc = true,
+    vue: enableVue = isPackageExists('vue'),
   } = options;
 
   const configs: Awaitable<FlatConfigItem | FlatConfigItem[] | Linter.Config[]>[] = [];
@@ -46,6 +47,15 @@ export async function useConfig(
   if (enableTypeScript) {
     const typescriptOptions = isObject(enableTypeScript) ? enableTypeScript : {};
     configs.push(typescript({ ...typescriptOptions }));
+  }
+
+  // Vue config
+  if (enableVue) {
+    const vueOptions = isObject(enableVue) ? enableVue : {};
+    configs.push(vue({
+      typescript: !!enableTypeScript,
+      ...vueOptions,
+    }));
   }
 
   // JSONC config
