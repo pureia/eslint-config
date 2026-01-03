@@ -7,7 +7,8 @@ export default useConfig(
     },
   },
   {
-    files: ['tsdown.config.ts'],
-    rules: { 'import/no-extraneous-dependencies': 'off' },
+    rules: {
+      'import/no-extraneous-dependencies': ['warn', { devDependencies: ['tsdown.config.ts'] }],
+    },
   }
 );
