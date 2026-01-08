@@ -120,7 +120,7 @@ export async function stylistic(): Promise<FlatConfigItem[]> {
         '@stylistic/exp-list-style': 'off', // 强制表达式列表样式（关闭）
 
         // Max Length Rules - 最大长度相关规则
-        '@stylistic/max-len': ['error', {
+        '@stylistic/max-len': ['off', {
           code: 120,
           tabWidth: 2,
           ignoreUrls: true,
@@ -148,7 +148,7 @@ export async function stylistic(): Promise<FlatConfigItem[]> {
         '@stylistic/newline-per-chained-call': 'off', // 强制链式调用换行（关闭）
 
         // No Confusing Arrow Rules - 箭头函数混淆相关规则
-        '@stylistic/no-confusing-arrow': ['error', { allowParens: true }], // 禁止可能与比较运算符混淆的箭头函数
+        '@stylistic/no-confusing-arrow': ['error', { onlyOneSimpleParam: true }], // 禁止可能与比较运算符混淆的箭头函数
 
         // No Extra Parens Rules - 额外括号相关规则
         '@stylistic/no-extra-parens': ['warn', 'all', { conditionalAssign: true, nestedBinaryExpressions: false, returnAssign: false }], // 禁止不必要的括号

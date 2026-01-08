@@ -5,6 +5,15 @@ import { isPackageExists } from 'local-pkg';
 import { ignores, imports, javascript, typescript, stylistic, jsonc, vue } from './configs';
 import { isObject } from './utils';
 
+const flatConfigProps = [
+  'name',
+  'languageOptions',
+  'linterOptions',
+  'processor',
+  'plugins',
+  'rules',
+  'settings',
+] as const;
 /**
  * Create ESLint configuration based on provided options
  *
@@ -21,7 +30,7 @@ import { isObject } from './utils';
  * ```
  */
 export async function useConfig(
-  options: ConfigOptions = {},
+  options: ConfigOptions & Omit<FlatConfigItem, 'files'> = {},
   ...extraConfigs: Awaitable<FlatConfigItem | FlatConfigItem[] | Linter.Config[]>[]
 ): Promise<FlatConfigItem[]> {
   const {
@@ -67,6 +76,10 @@ export async function useConfig(
 
   // JSONC config
   enableJsonc && configs.push(jsonc());
+
+  // Fused config
+  const fusedConfig = flatConfigProps.reduce<Omit<FlatConfigItem, 'files'>>((acc, key) => key in options ? Object.assign(acc, { [key]: options[key] }) : acc, {});
+  Object.keys(fusedConfig).length && configs.push(fusedConfig);
 
   // Extra configs
   configs.push(...extraConfigs);
