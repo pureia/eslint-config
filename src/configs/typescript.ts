@@ -104,7 +104,7 @@ export async function typescript(options: TypeScriptOptions = {}): Promise<FlatC
         '@typescript-eslint/no-confusing-non-null-assertion': 'error', // 禁止令人困惑的非空断言
         '@typescript-eslint/no-duplicate-enum-values': 'error', // 禁止枚举中有重复的值
         '@typescript-eslint/no-dynamic-delete': 'error', // 禁止使用动态属性名的 delete 操作
-        '@typescript-eslint/no-empty-function': 'warn', // 空函数时警告（除非有注释说明）
+        '@typescript-eslint/no-empty-function': 'off', // 空函数时警告（除非有注释说明）(使用 JavaScript 规则)
         '@typescript-eslint/no-extra-non-null-assertion': 'warn', // 多余的非空断言时警告（如 !!x!）
         '@typescript-eslint/no-empty-object-type': 'error', // 禁止使用 {} 作为类型（应使用 object 或 Record<string, unknown>）
         '@typescript-eslint/no-extraneous-class': 'error', // 禁止没有实例成员的类
@@ -208,7 +208,7 @@ export async function typescript(options: TypeScriptOptions = {}): Promise<FlatC
           },
         ], // 强制命名约定
         '@typescript-eslint/no-array-constructor': 'warn', // 使用 new Array() 时警告（建议使用 []）
-        '@typescript-eslint/no-dupe-class-members': 'error', // 禁止重复的类成员
+        '@typescript-eslint/no-dupe-class-members': 'off', // 禁止重复的类成员（使用 JavaScript 规则）
         '@typescript-eslint/no-empty-interface': 'warn', // 空接口时警告（建议使用 type）
         '@typescript-eslint/no-for-in-array': 'error', // 禁止在数组上使用 for-in（应使用 for-of 或 forEach）
         '@typescript-eslint/no-import-type-side-effects': 'error', // 禁止类型导入的副作用
@@ -220,7 +220,7 @@ export async function typescript(options: TypeScriptOptions = {}): Promise<FlatC
         '@typescript-eslint/no-namespace': 'warn', // 使用 namespace 时警告（建议使用模块）
         '@typescript-eslint/no-non-null-asserted-nullish-coalescing': 'error', // 禁止同时使用非空断言和空值合并（如 x! ?? y）
         '@typescript-eslint/no-non-null-asserted-optional-chain': 'error', // 禁止在可选链后使用非空断言（如 obj.prop!?.value）
-        '@typescript-eslint/no-redeclare': 'error', // 禁止重复声明
+        '@typescript-eslint/no-redeclare': 'off', // 禁止重复声明（使用 JavaScript 规则）
         '@typescript-eslint/no-require-imports': 'error', // 禁止使用 require 导入（应使用 import）
         '@typescript-eslint/no-restricted-imports': 'off', // 限制导入（关闭）
         '@typescript-eslint/no-restricted-types': 'off', // 限制类型（关闭）

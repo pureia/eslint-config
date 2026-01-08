@@ -53,7 +53,7 @@ export async function vue(options: VueOptions = {}): Promise<FlatConfigItem[]> {
       },
       rules: {
         // Vue 2 specific rules
-        ...vueVersion === 2 ? vuePlugin.configs['flat/vue2-recommended'].map((item) => item.rules).reduce((prev, cur) => ({ ...prev, ...cur }), {}) : {},
+        ...vueVersion === 2 ? vuePlugin.configs['flat/vue2-recommended'].map(item => item.rules).reduce((prev, cur) => ({ ...prev, ...cur }), {}) : {},
         // Vue 3 specific rules
         ...vueVersion === 3 ? {
           ...vuePlugin.configs.base.rules,
