@@ -43,18 +43,25 @@ export async function useConfig(
   // Imports config
   enableImports && configs.push(imports());
 
-  // TypeScript config
-  if (enableTypeScript) {
-    const typescriptOptions = isObject(enableTypeScript) ? enableTypeScript : {};
-    configs.push(typescript({ ...typescriptOptions }));
-  }
-
   // Vue config
   if (enableVue) {
     const vueOptions = isObject(enableVue) ? enableVue : {};
     configs.push(vue({
       typescript: !!enableTypeScript,
       ...vueOptions,
+    }));
+  }
+
+  // TypeScript config
+  if (enableTypeScript) {
+    const typescriptOptions = isObject(enableTypeScript) ? enableTypeScript : {};
+
+    const componentExts = typescriptOptions.componentExts ?? [];
+    enableVue && componentExts.push('vue');
+
+    configs.push(typescript({
+      ...typescriptOptions,
+      componentExts,
     }));
   }
 

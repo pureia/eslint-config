@@ -21,6 +21,11 @@ export async function javascript(): Promise<FlatConfigItem[]> {
           document: 'readonly',
           navigator: 'readonly',
         },
+        parserOptions: {
+          sourceType: 'module',
+          ecmaVersion: 'latest',
+          ecmaFeatures: { jsx: true },
+        },
       },
       linterOptions: { reportUnusedDisableDirectives: true },
     },

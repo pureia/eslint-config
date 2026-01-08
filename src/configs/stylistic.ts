@@ -19,7 +19,7 @@ export async function stylistic(): Promise<FlatConfigItem[]> {
         '@stylistic/array-element-newline': 'off', // 强制数组元素换行（关闭）
 
         // Arrow Function Rules - 箭头函数相关规则
-        '@stylistic/arrow-parens': ['error', 'always'], // 强制箭头函数参数使用括号
+        '@stylistic/arrow-parens': ['error', 'as-needed'], // 箭头函数只有一个参数时可以省略圆括号（警告）
         '@stylistic/arrow-spacing': ['error', { before: true, after: true }], // 强制箭头函数箭头前后空格
 
         // Block Rules - 块相关规则

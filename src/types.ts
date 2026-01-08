@@ -21,7 +21,7 @@ export interface ConfigOptions {
    * Enable TypeScript rules
    * @default true (if TypeScript is detected in the project)
    */
-  typescript?: boolean | OptionsTypeScriptWithTypes
+  typescript?: boolean | TypeScriptOptions
   /**
    * Enable JSONC rules
    * @default true
@@ -45,10 +45,7 @@ export type FlatConfigItem = Omit<Linter.Config, 'plugins'> & {
 };
 
 /** TypeScript options. */
-export type TypeScriptOptions = OptionsTypeScriptWithTypes;
-
-/** Options for TypeScript with types. */
-interface OptionsTypeScriptWithTypes {
+export interface TypeScriptOptions {
   /**
    * When this options is provided, type aware rules will be enabled.
    * @see https://typescript-eslint.io/linting/typed-linting/
@@ -59,6 +56,11 @@ interface OptionsTypeScriptWithTypes {
    * Override type aware rules.
    */
   overridesTypeAwareRules?: FlatConfigItem['rules']
+
+  /**
+   * component file extensions
+   */
+  componentExts?: string[]
 }
 
 /** Vue options. */

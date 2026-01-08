@@ -2,6 +2,8 @@ import type { FlatConfigItem, TypeScriptOptions } from '../types';
 import { importDefault } from '../utils';
 
 export async function typescript(options: TypeScriptOptions = {}): Promise<FlatConfigItem[]> {
+  const componentExts = options.componentExts ?? [];
+
   const tsconfigPath = options.tsconfigPath ?? undefined;
   const isTypeAware = !!tsconfigPath;
 
@@ -20,6 +22,7 @@ export async function typescript(options: TypeScriptOptions = {}): Promise<FlatC
         parser: tsParser,
         parserOptions: {
           sourceType: 'module',
+          extraFileExtensions: componentExts.map(ext => `.${ext}`),
           ...isTypeAware ? {
             projectService: {
               allowDefaultProject: ['./*.js'],
@@ -33,7 +36,7 @@ export async function typescript(options: TypeScriptOptions = {}): Promise<FlatC
     },
     {
       name: 'purea/typescript/rules',
-      files: ['**/*.ts', '**/*.tsx', '**/*.d.ts'],
+      files: ['**/*.?([cm])ts', '**/*.?([cm])tsx', ...componentExts.map(ext => `**/*.${ext}`)],
       rules: {
         // 是否开启类型检查相关规则
         ...isTypeAware ? {
