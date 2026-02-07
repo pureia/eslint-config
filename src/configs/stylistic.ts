@@ -120,14 +120,7 @@ export async function stylistic(): Promise<FlatConfigItem[]> {
         '@stylistic/exp-list-style': 'off', // 强制表达式列表样式（关闭）
 
         // Max Length Rules - 最大长度相关规则
-        '@stylistic/max-len': ['off', {
-          code: 120,
-          tabWidth: 2,
-          ignoreUrls: true,
-          ignoreComments: true,
-          ignoreStrings: true,
-          ignoreTemplateLiterals: true,
-        }], // 强制最大行长度为120
+        '@stylistic/max-len': 'off', // 强制最大行长度为120
 
         // Max Statements Per Line Rules - 每行最大语句数相关规则
         '@stylistic/max-statements-per-line': ['error', { max: 1 }], // 强制每行最大语句数量
@@ -148,7 +141,7 @@ export async function stylistic(): Promise<FlatConfigItem[]> {
         '@stylistic/newline-per-chained-call': 'off', // 强制链式调用换行（关闭）
 
         // No Confusing Arrow Rules - 箭头函数混淆相关规则
-        '@stylistic/no-confusing-arrow': ['error', { onlyOneSimpleParam: true }], // 禁止可能与比较运算符混淆的箭头函数
+        '@stylistic/no-confusing-arrow': 'off', // 禁止可能与比较运算符混淆的箭头函数（关闭）
 
         // No Extra Parens Rules - 额外括号相关规则
         '@stylistic/no-extra-parens': ['warn', 'all', { conditionalAssign: true, nestedBinaryExpressions: false, returnAssign: false }], // 禁止不必要的括号

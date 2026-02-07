@@ -5,8 +5,7 @@ import type { Awaitable } from './types';
  * @param value - 要检查的值
  * @returns 如果值是非空对象则返回 true，否则返回 false
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const isObject = (value: unknown): value is Record<string, any> => typeof value === 'object' && value !== null;
+export const isObject = (value: unknown): value is object => typeof value === 'object' && value !== null;
 
 /**
  * 导入默认导出

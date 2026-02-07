@@ -128,85 +128,14 @@ export async function typescript(options: TypeScriptOptions = {}): Promise<FlatC
         '@typescript-eslint/consistent-type-definitions': ['warn', 'interface'], // 优先使用 interface 而非 type 定义类型
         '@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports', disallowTypeAnnotations: false }], // 类型导入使用 import type
         '@typescript-eslint/default-param-last': 'warn', // 默认参数应放在参数列表最后
-        '@typescript-eslint/explicit-function-return-type': ['warn', { allowExpressions: true, allowTypedFunctionExpressions: true, allowHigherOrderFunctions: true, allowDirectConstAssertionInArrowFunctions: true, allowConciseArrowFunctionExpressionsStartingWithVoid: false }], // 要求显式声明函数返回类型（警告级别，允许表达式）
+        '@typescript-eslint/explicit-function-return-type': 'off', // 要求显式声明函数返回类型（警告级别，允许表达式）(关闭)
         '@typescript-eslint/explicit-member-accessibility': ['warn', { accessibility: 'no-public' }], // 类成员应显式声明可访问性（public 除外）
-        '@typescript-eslint/explicit-module-boundary-types': 'warn', // 导出的函数和类应显式声明类型
+        '@typescript-eslint/explicit-module-boundary-types': 'off', // 导出的函数和类应显式声明类型
         '@typescript-eslint/init-declarations': 'off', // 不要求变量声明时初始化
         '@typescript-eslint/max-params': ['warn', { max: 4 }], // 函数参数不超过 4 个（建议使用对象参数）
         '@typescript-eslint/member-ordering': 'off', // 不强制类成员排序
         '@typescript-eslint/method-signature-style': 'warn', // 方法签名使用 property: () => void 而非 property(): void
-        '@typescript-eslint/naming-convention': [
-          'warn',
-          // 变量和函数：驼峰命名或大写常量
-          {
-            selector: ['variable', 'function'],
-            format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
-            leadingUnderscore: 'allow',
-            trailingUnderscore: 'allow',
-          },
-          // 参数：驼峰命名
-          {
-            selector: 'parameter',
-            format: ['camelCase'],
-            leadingUnderscore: 'allow',
-          },
-          // 类属性：驼峰或大写常量，私有属性建议前缀下划线
-          {
-            selector: 'classProperty',
-            format: ['camelCase', 'UPPER_CASE'],
-            leadingUnderscore: 'allow',
-            trailingUnderscore: 'allow',
-          },
-          {
-            selector: 'classProperty',
-            modifiers: ['private', 'protected'],
-            format: ['camelCase'],
-            leadingUnderscore: 'allow',
-          },
-          // 类方法：驼峰命名，私有方法建议前缀下划线
-          {
-            selector: 'classMethod',
-            format: ['camelCase'],
-            leadingUnderscore: 'allow',
-          },
-          {
-            selector: 'classMethod',
-            modifiers: ['private', 'protected'],
-            format: ['camelCase'],
-            leadingUnderscore: 'allow',
-          },
-          // 访问器：驼峰命名
-          {
-            selector: 'accessor',
-            format: ['camelCase'],
-            leadingUnderscore: 'allow',
-          },
-          // 类型、接口、类、枚举：大驼峰命名，禁止 I 前缀
-          {
-            selector: ['typeAlias', 'interface', 'class', 'enum'],
-            format: ['PascalCase'],
-            custom: {
-              regex: '^I[A-Z]',
-              match: false,
-            },
-          },
-          // 枚举成员：全大写
-          {
-            selector: 'enumMember',
-            format: ['UPPER_CASE'],
-          },
-          // 泛型参数：大驼峰命名，推荐 T/K/V 等前缀
-          {
-            selector: 'typeParameter',
-            format: ['PascalCase'],
-            prefix: ['T', 'K', 'V', 'E', 'R', 'P', 'U'],
-          },
-          // 对象属性：灵活命名
-          {
-            selector: 'objectLiteralProperty',
-            format: null,
-          },
-        ], // 强制命名约定
+        '@typescript-eslint/naming-convention': 'off', // 强制命名约定（关闭）
         '@typescript-eslint/no-array-constructor': 'warn', // 使用 new Array() 时警告（建议使用 []）
         '@typescript-eslint/no-dupe-class-members': 'off', // 禁止重复的类成员（使用 JavaScript 规则）
         '@typescript-eslint/no-empty-interface': 'warn', // 空接口时警告（建议使用 type）

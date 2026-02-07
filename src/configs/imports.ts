@@ -1,6 +1,8 @@
 import type { FlatConfigItem } from '../types';
-
 import { importDefault } from '../utils';
+
+const typeScriptExtensions = ['.ts', '.cts', '.mts', '.tsx'];
+const allExtensions = [...typeScriptExtensions, '.js', '.jsx', '.mjs', '.cjs'];
 
 export async function imports(): Promise<FlatConfigItem[]> {
   const [importPlugin] = await Promise.all([
@@ -12,10 +14,12 @@ export async function imports(): Promise<FlatConfigItem[]> {
       name: 'purea/imports',
       plugins: { import: importPlugin },
       settings: {
+        'import/external-module-folders': ['node_modules', 'node_modules/@types'],
+        'import/parsers': {
+          '@typescript-eslint/parser': typeScriptExtensions,
+        },
         'import/resolver': {
-          node: {
-            extensions: ['.js', '.jsx', '.ts', '.tsx'],
-          },
+          node: allExtensions,
         },
       },
     },
@@ -24,7 +28,7 @@ export async function imports(): Promise<FlatConfigItem[]> {
       rules: {
         // Static analysis - 静态分析
         'import/no-unresolved': 'off', // 禁止导入无法解析的模块（关闭，由其他规则处理）
-        'import/named': 'error', // 确保命名导入存在
+        'import/named': 'off', // 禁用，由 TypeScript 类型检查替代
         'import/default': 'error', // 确保默认导入存在
         'import/namespace': 'error', // 确保命名空间导入存在
         'import/no-absolute-path': 'error', // 禁止绝对路径导入
@@ -87,16 +91,7 @@ export async function imports(): Promise<FlatConfigItem[]> {
         'import/no-deprecated': 'warn', // 禁止导入已弃用的模块
         'import/no-unassigned-import': 'off', // 禁止未赋值的导入（关闭）
         'import/no-named-export': 'off', // 禁止命名导出（关闭）
-        'import/extensions': [
-          'error',
-          'ignorePackages',
-          {
-            js: 'never',
-            jsx: 'never',
-            ts: 'never',
-            tsx: 'never',
-          },
-        ], // 强制或禁止文件扩展名
+        'import/extensions': 'off', // 强制或禁止文件扩展名
         'import/no-internal-modules': 'off', // 禁止导入内部模块（关闭）
       },
     },

@@ -85,7 +85,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'no-unsafe-negation': 'error', // 禁止关系运算符的否定操作符位置不正确
         'no-unsafe-optional-chaining': 'error', // 禁止不安全的可选链
         'no-unused-private-class-members': 'error', // 禁止未使用的私有类成员
-        'no-unused-vars': ['warn', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }], // 禁止未使用的变量
+        'no-unused-vars': ['warn', { vars: 'all', args: 'none', caughtErrors: 'none', ignoreRestSiblings: true }], // 禁止未使用的变量
         'no-use-before-define': ['error', { functions: true, classes: true, variables: true }], // 禁止在定义前使用变量
         'no-useless-assignment': 'error', // 禁止无用的赋值
         'no-useless-backreference': 'error', // 禁止正则表达式中的无用反向引用
@@ -246,7 +246,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
           object: true,
         }, { enforceForRenamedProperties: false }], // 要求使用解构
         'prefer-exponentiation-operator': 'error', // 要求使用指数运算符
-        'prefer-named-capture-group': 'warn', // 要求使用命名捕获组（警告）
+        'prefer-named-capture-group': 'off', // 要求使用命名捕获组（关闭）
         'prefer-numeric-literals': 'error', // 要求使用数字字面量
         'prefer-object-has-own': 'error', // 要求使用 Object.hasOwn
         'prefer-object-spread': 'error', // 要求使用对象展开
