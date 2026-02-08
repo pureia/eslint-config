@@ -47,16 +47,17 @@ export async function vue(options: VueOptions = {}): Promise<FlatConfigItem[]> {
         parserOptions: {
           ecmaFeatures: { jsx: true },
           extraFileExtensions: ['.vue'],
-          parser: typescript ? await importDefault(import('@typescript-eslint/parser')) : undefined,
+          parser: typescript ? await importDefault(import('@typescript-eslint/parser')) : null,
           sourceType: 'module',
         },
       },
       rules: {
+        ...vuePlugin.configs.base.rules,
+
         // Vue 2 specific rules
         ...vueVersion === 2 ? vuePlugin.configs['flat/vue2-recommended'].map(item => item.rules).reduce((prev, cur) => ({ ...prev, ...cur }), {}) : {},
         // Vue 3 specific rules
         ...vueVersion === 3 ? {
-          ...vuePlugin.configs.base.rules,
           ...vuePlugin.configs['vue3-essential'].rules,
           ...vuePlugin.configs['vue3-recommended'].rules,
           ...vuePlugin.configs['vue3-strongly-recommended'].rules,

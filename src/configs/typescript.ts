@@ -24,6 +24,7 @@ export async function typescript(options: TypeScriptOptions = {}): Promise<FlatC
     },
     {
       name: 'purea/typescript/parser',
+      files,
       languageOptions: {
         parser: tsParser,
         parserOptions: {
