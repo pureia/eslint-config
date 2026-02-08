@@ -1,6 +1,7 @@
 import type { Linter } from 'eslint';
 import type { Awaitable, ConfigOptions, FlatConfigItem } from './types';
 import { isPackageExists } from 'local-pkg';
+import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import { isObject } from './utils';
 import { vue, jsonc, ignores, imports, stylistic, javascript, typescript, perfectionist } from './configs';
 
@@ -17,7 +18,8 @@ const flatConfigProps = [
  * Create ESLint configuration based on provided options
  *
  * @param options - Configuration options
- * @returns Array of ESLint configurations
+ * @param extraConfigs - Additional configurations to append
+ * @returns FlatConfigComposer instance
  *
  * @example
  * ```typescript
@@ -28,10 +30,10 @@ const flatConfigProps = [
  * })
  * ```
  */
-export async function useConfig(
+export function useConfig(
   options: ConfigOptions & Omit<FlatConfigItem, 'files'> = {},
   ...extraConfigs: Awaitable<FlatConfigItem | FlatConfigItem[] | Linter.Config[]>[]
-): Promise<FlatConfigItem[]> {
+): FlatConfigComposer<FlatConfigItem> {
   const {
     ignores: userIgnores = [],
     imports: enableImports = true,
@@ -60,6 +62,7 @@ export async function useConfig(
     const typescriptOptions = isObject(enableTypeScript) ? enableTypeScript : {};
 
     const componentExts = typescriptOptions.componentExts ?? [];
+    enableVue && componentExts.push('vue');
 
     configs.push(typescript({
       ...typescriptOptions,
@@ -86,7 +89,9 @@ export async function useConfig(
   // Extra configs
   configs.push(...extraConfigs);
 
-  const resolvedConfigs = await Promise.all(configs);
+  const composer = new FlatConfigComposer<FlatConfigItem>();
 
-  return resolvedConfigs.flat().filter(Boolean);
+  composer.append(...configs);
+
+  return composer;
 }
