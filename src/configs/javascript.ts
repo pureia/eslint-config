@@ -10,7 +10,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
 
   return [
     {
-      name: 'purea/javascript',
+      name: 'purea/javascript/setup',
       languageOptions: {
         sourceType: 'module',
         globals: {
@@ -53,7 +53,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'no-dupe-else-if': 'error', // 禁止重复的 else-if 条件
         'no-dupe-keys': 'error', // 禁止对象字面量中重复的键
         'no-duplicate-case': 'error', // 禁止 switch 语句中重复的 case
-        'no-duplicate-imports': ['error', { includeExports: true }], // 禁止重复导入
+        'no-duplicate-imports': ['error', { includeExports: true, allowSeparateTypeImports: true }], // 禁止重复导入
         'no-empty-character-class': 'error', // 禁止正则表达式中的空字符类
         'no-empty-pattern': 'error', // 禁止空的解构模式
         'no-ex-assign': 'error', // 禁止重新分配异常参数
@@ -101,7 +101,7 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'capitalized-comments': 'off', // 强制或禁止注释首字母大写（关闭）
         'class-methods-use-this': 'warn', // 强制类方法使用 this
         complexity: ['warn', 25], // 强制代码复杂度不超过 25（调整为警告级别）
-        'consistent-return': 'error', // 强制 return 语句始终返回或不返回
+        // 'consistent-return': 'error', // 强制 return 语句始终返回或不返回
         'consistent-this': 'off', // 强制 this 别名一致（关闭）
         curly: ['error', 'multi-line'], // 强制多行语句使用大括号，单行允许省略
         'default-case': 'warn', // 强制 switch 语句有 default 分支

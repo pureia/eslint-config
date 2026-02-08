@@ -12,7 +12,7 @@ export async function jsonc(): Promise<FlatConfigItem[]> {
 
   return [
     {
-      name: 'purea/jsonc',
+      name: 'purea/jsonc/setup',
       plugins: { jsonc: jsoncPlugin },
     },
     {

@@ -18,7 +18,7 @@ export async function vue(options: VueOptions = {}): Promise<FlatConfigItem[]> {
 
   return [
     {
-      name: 'purea/vue',
+      name: 'purea/vue/setup',
       languageOptions: {
         globals: {
           computed: 'readonly',
