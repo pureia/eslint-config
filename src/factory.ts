@@ -1,9 +1,8 @@
 import type { Linter } from 'eslint';
 import type { Awaitable, ConfigOptions, FlatConfigItem } from './types';
-
 import { isPackageExists } from 'local-pkg';
-import { ignores, imports, javascript, typescript, stylistic, jsonc, vue } from './configs';
 import { isObject } from './utils';
+import { vue, jsonc, ignores, imports, stylistic, javascript, typescript, perfectionist } from './configs';
 
 const flatConfigProps = [
   'name',
@@ -39,6 +38,7 @@ export async function useConfig(
     typescript: enableTypeScript = isPackageExists('typescript'),
     jsonc: enableJsonc = true,
     vue: enableVue = isPackageExists('vue'),
+    perfectionist: enablePerfectionist = true,
   } = options;
 
   const configs: Awaitable<FlatConfigItem | FlatConfigItem[] | Linter.Config[]>[] = [];
@@ -51,6 +51,9 @@ export async function useConfig(
 
   // Imports config
   enableImports && configs.push(imports());
+
+  // Perfectionist config
+  enablePerfectionist && configs.push(perfectionist());
 
   // TypeScript config
   if (enableTypeScript) {

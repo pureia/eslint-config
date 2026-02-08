@@ -46,27 +46,6 @@ export async function imports(): Promise<FlatConfigItem[]> {
         'import/no-namespace': 'off', // 禁止命名空间导入（关闭）
         'import/newline-after-import': ['error', { count: 1 }], // 导入后强制空行
         'import/no-anonymous-default-export': 'error', // 禁止匿名默认导出
-        'import/order': [
-          'error',
-          {
-            groups: [
-              'type', // 类型导入
-              'builtin', // 内置模块
-              'external', // 外部依赖
-              'internal', // 内部模块
-              ['parent', 'sibling'], // 父级和同级
-              'index', // 索引文件
-              'object', // 对象类型
-            ],
-            'newlines-between': 'ignore', // 组之间强制空行
-            sortTypesGroup: true, // 对类型导入进行排序
-            'newlines-between-types': 'never', // 类型导入组之间强制空行
-            alphabetize: {
-              order: 'asc', // 按字母顺序排序
-              caseInsensitive: true, // 不区分大小写
-            },
-          },
-        ], // 强制导入排序
         'import/no-cycle': 'warn', // 禁止循环依赖
         'import/no-self-import': 'error', // 禁止导入自身
         'import/no-useless-path-segments': ['error', { noUselessIndex: true }], // 禁止无用的路径段

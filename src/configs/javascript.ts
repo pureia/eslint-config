@@ -4,8 +4,10 @@ import { importDefault } from '../utils';
 export async function javascript(): Promise<FlatConfigItem[]> {
   const [
     globals,
+    unusedImportsPlugin,
   ] = await Promise.all([
     importDefault(import('globals')),
+    importDefault(import('eslint-plugin-unused-imports')),
   ] as const);
 
   return [
@@ -31,6 +33,9 @@ export async function javascript(): Promise<FlatConfigItem[]> {
     },
     {
       name: 'purea/javascript/rules',
+      plugins: {
+        'unused-imports': unusedImportsPlugin,
+      },
       rules: {
         // Possible Problems - 可能的问题
         'array-callback-return': ['error', { allowImplicit: true, checkForEach: false }], // 强制数组方法的回调函数有返回值
@@ -85,11 +90,22 @@ export async function javascript(): Promise<FlatConfigItem[]> {
         'no-unsafe-negation': 'error', // 禁止关系运算符的否定操作符位置不正确
         'no-unsafe-optional-chaining': 'error', // 禁止不安全的可选链
         'no-unused-private-class-members': 'error', // 禁止未使用的私有类成员
-        'no-unused-vars': ['warn', { vars: 'all', args: 'none', caughtErrors: 'none', ignoreRestSiblings: true }], // 禁止未使用的变量
-        'no-use-before-define': ['error', { functions: true, classes: true, variables: true }], // 禁止在定义前使用变量
-        'no-useless-assignment': 'error', // 禁止无用的赋值
+        'no-unused-vars': 'off', // 关闭内置规则，使用 unused-imports 替代
+        'unused-imports/no-unused-imports': 'warn', // 禁止未使用的导入（自动修复）
+        'unused-imports/no-unused-vars': [
+          'warn',
+          {
+            args: 'after-used',
+            argsIgnorePattern: '^_',
+            ignoreRestSiblings: true,
+            vars: 'all',
+            varsIgnorePattern: '^_',
+          },
+        ], // 禁止未使用的变量（增强版）
+        'no-use-before-define': ['warn', { classes: false, functions: false, variables: true }], // 禁止在定义前使用变量
+        // 'no-useless-assignment': 'error', // 禁止无用的赋值
         'no-useless-backreference': 'error', // 禁止正则表达式中的无用反向引用
-        'require-atomic-updates': 'error', // 禁止可能导致竞态条件的赋值
+        'require-atomic-updates': 'warn', // 禁止可能导致竞态条件的赋值
         'use-isnan': 'error', // 要求使用 isNaN() 检查 NaN
         'valid-typeof': ['error', { requireStringLiterals: true }], // 强制 typeof 表达式与有效字符串比较
 

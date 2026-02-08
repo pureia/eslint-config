@@ -32,6 +32,11 @@ export interface ConfigOptions {
    * @default true (if Vue is detected in the project)
    */
   vue?: boolean | VueOptions
+  /**
+   * Enable perfectionist rules
+   * @default true
+   */
+  perfectionist?: boolean
 }
 
 export type FlatConfigItem = Omit<Linter.Config, 'plugins'> & {

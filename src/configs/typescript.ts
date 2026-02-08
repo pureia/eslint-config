@@ -1,5 +1,5 @@
 import type { FlatConfigItem, TypeScriptOptions } from '../types';
-import { importDefault, renameRules } from '../utils';
+import { renameRules, importDefault } from '../utils';
 
 export async function typescript(options: TypeScriptOptions = {}): Promise<FlatConfigItem[]> {
   const componentExts = options.componentExts ?? [];
@@ -186,8 +186,8 @@ export async function typescript(options: TypeScriptOptions = {}): Promise<FlatC
 
         // Variables - 变量相关
         'ts/no-shadow': 'warn', // 不检查变量遮蔽
-        'ts/no-unused-vars': 'warn', // 不检查未使用的变量
-        'ts/no-use-before-define': 'warn', // 允许在定义前使用变量
+        'ts/no-unused-vars': 'off', // 不检查未使用的变量
+        'ts/no-use-before-define': ['warn', { classes: false, functions: false, variables: true }], // 允许在定义前使用变量
 
         // ECMAScript 6 - ES6+ 特性
         'ts/no-var-requires': 'error', // 禁止使用 var require（应使用 import）
