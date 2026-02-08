@@ -51,6 +51,7 @@ export async function vue(options: VueOptions = {}): Promise<FlatConfigItem[]> {
           sourceType: 'module',
         },
       },
+      processor: vuePlugin.processors['.vue'],
       rules: {
         ...vuePlugin.configs.base.rules,
 
