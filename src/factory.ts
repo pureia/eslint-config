@@ -1,26 +1,17 @@
-import type { OptionsConfig, TypedFlatConfigItem } from '@antfu/eslint-config';
 import type { Linter } from 'eslint';
+import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from '@antfu/eslint-config';
 import antfu from '@antfu/eslint-config';
-import { defaultRules } from './rules';
+import { defaultConfigs } from './configs';
 
-export type { OptionsConfig, TypedFlatConfigItem };
-
-type Awaitable<T> = Promise<T> | T;
+export type { Awaitable, OptionsConfig, TypedFlatConfigItem };
 
 export function useConfig(
   options: OptionsConfig & Omit<TypedFlatConfigItem, 'files' | 'ignores'> = {},
   ...extraConfigs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | Linter.Config[]>[]
-): ReturnType<typeof antfu> {
-  const { rules: userRules, ...restOptions } = options;
-
+): Linter.Config[] | Promise<Linter.Config[]> {
   return antfu(
-    {
-      ...restOptions,
-      rules: {
-        ...defaultRules,
-        ...userRules,
-      },
-    },
+    options,
+    ...defaultConfigs,
     ...extraConfigs
   );
 }

@@ -1,6 +1,6 @@
 import { useConfig } from './factory';
 
-export type { OptionsConfig, TypedFlatConfigItem } from './factory';
+export type { Awaitable, OptionsConfig, TypedFlatConfigItem } from './factory';
 
 export { useConfig };
 

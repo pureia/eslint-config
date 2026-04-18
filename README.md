@@ -1,20 +1,22 @@
 # @purea/eslint-config
 
-> 基于 [@antfu/eslint-config](https://github.com/antfu/eslint-config) 的 ESLint 配置预设，附带团队默认规则。
+基于 [@antfu/eslint-config](https://github.com/antfu/eslint-config) 的 ESLint Flat Config 预设，内置团队默认规则。
 
 ## 特性
 
 - 基于 `@antfu/eslint-config`，开箱即用
 - 自动检测 TypeScript、Vue 等技术栈
-- 内置团队默认规则，可被用户规则覆盖
-- ESLint Flat Config 格式
+- 内置团队默认规则，用户规则优先级更高
+- ESLint Flat Config 格式（ESLint 9+）
 - 完整的 TypeScript 类型支持
 
 ## 安装
 
 ```bash
-pnpm add -D @purea/eslint-config
+pnpm add -D @purea/eslint-config eslint
 ```
+
+> 要求 `eslint >= 9.39.2` 作为 peer dependency。
 
 ## 使用
 
@@ -80,12 +82,12 @@ export default useConfig(
 
 ## 导出
 
-| 导出 | 说明 |
-|------|------|
-| `default` / `useConfig` | 工厂函数 |
-| `defaultRules` | 内置默认规则对象 |
-| `OptionsConfig` | 选项类型 |
-| `TypedFlatConfigItem` | 配置项类型 |
+| 导出 | 类型 | 说明 |
+| --- | --- | --- |
+| `default` / `useConfig` | 函数 | 工厂函数，返回 `Linter.Config[]` |
+| `Awaitable` | 类型 | 异步可等待类型（来自 `@antfu/eslint-config`） |
+| `OptionsConfig` | 类型 | 配置选项类型（来自 `@antfu/eslint-config`） |
+| `TypedFlatConfigItem` | 类型 | 配置项类型（来自 `@antfu/eslint-config`） |
 
 ## 更多选项
 
@@ -100,17 +102,17 @@ export default useConfig(
 ## 开发
 
 ```bash
-pnpm install
-pnpm build
-pnpm lint
+pnpm install    # 安装依赖
+pnpm build      # 构建（tsdown → ESM + DTS）
+pnpm dev        # 监听模式构建
+pnpm lint       # ESLint 自检
 ```
 
 ## 项目结构
 
 ```
 src/
-├── index.ts     # 入口
-├── factory.ts   # 工厂函数
-└── rules.ts     # 默认规则
+├── index.ts     # 入口，导出 useConfig 及类型
+├── factory.ts   # 工厂函数，注入默认规则
+└── configs.ts   # 团队默认规则定义
 ```
-
