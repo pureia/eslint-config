@@ -1,9 +1,7 @@
 import { useConfig } from './factory';
 
-export type * from './types';
+export type { OptionsConfig, TypedFlatConfigItem } from './factory';
 
-export * from './utils';
-export * from './configs';
-export * from './factory';
+export { useConfig };
 
 export default useConfig;

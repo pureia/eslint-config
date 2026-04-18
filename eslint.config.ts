@@ -1,7 +1,3 @@
-import { useConfig } from './src';
+import { useConfig } from '@purea/eslint-config';
 
-export default useConfig({
-  rules: {
-    'import/no-extraneous-dependencies': ['warn', { devDependencies: ['tsdown.config.ts'] }],
-  },
-});
+export default useConfig();
