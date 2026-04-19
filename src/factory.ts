@@ -1,70 +1,35 @@
 import type { Linter } from 'eslint';
-import type { Awaitable, ConfigOptions, FlatConfigItem } from './types';
+import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from '@antfu/eslint-config';
+import antfu from '@antfu/eslint-config';
+import { defaultRules } from './rules';
+import { defaultConfigs } from './configs';
 
-import { isPackageExists } from 'local-pkg';
-import { ignores, imports, javascript, typescript, stylistic, jsonc, vue } from './configs';
-import { isObject } from './utils';
+export type { Awaitable, OptionsConfig, TypedFlatConfigItem };
 
-/**
- * Create ESLint configuration based on provided options
- *
- * @param options - Configuration options
- * @returns Array of ESLint configurations
- *
- * @example
- * ```typescript
- * import { useConfig } from '@purea/eslint-config'
- *
- * export default useConfig({
- *   typescript: true,
- * })
- * ```
- */
-export async function useConfig(
-  options: ConfigOptions = {},
-  ...extraConfigs: Awaitable<FlatConfigItem | FlatConfigItem[] | Linter.Config[]>[]
-): Promise<FlatConfigItem[]> {
-  const {
-    ignores: userIgnores = [],
-    imports: enableImports = true,
-    typescript: enableTypeScript = isPackageExists('typescript'),
-    jsonc: enableJsonc = true,
-    vue: enableVue = isPackageExists('vue'),
-  } = options;
+export function useConfig(
+  options: OptionsConfig & Omit<TypedFlatConfigItem, 'files' | 'ignores'> = { },
+  ...extraConfigs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | Linter.Config[]>[]
+): Linter.Config[] | Promise<Linter.Config[]> {
+  const { rules: userRules } = options;
 
-  const configs: Awaitable<FlatConfigItem | FlatConfigItem[] | Linter.Config[]>[] = [];
+  /** 当前默认配置：移除默认配置中用户已定义的规则 */
+  const currentDefaultConfigs = defaultConfigs.map((config) => {
+    if (!config?.rules || !userRules) return config;
+    return {
+      ...config,
+      rules: Object.fromEntries(Object.entries(config.rules).filter(([ruleName]) => !(ruleName in userRules))),
+    };
+  });
 
-  configs.push(
-    ignores(userIgnores),
-    javascript(),
-    stylistic()
+  return antfu(
+    {
+      ...options,
+      rules: {
+        ...defaultRules,
+        ...(userRules ?? {}),
+      },
+    },
+    ...currentDefaultConfigs,
+    ...extraConfigs
   );
-
-  // Imports config
-  enableImports && configs.push(imports());
-
-  // TypeScript config
-  if (enableTypeScript) {
-    const typescriptOptions = isObject(enableTypeScript) ? enableTypeScript : {};
-    configs.push(typescript({ ...typescriptOptions }));
-  }
-
-  // Vue config
-  if (enableVue) {
-    const vueOptions = isObject(enableVue) ? enableVue : {};
-    configs.push(vue({
-      typescript: !!enableTypeScript,
-      ...vueOptions,
-    }));
-  }
-
-  // JSONC config
-  enableJsonc && configs.push(jsonc());
-
-  // Extra configs
-  configs.push(...extraConfigs);
-
-  const resolvedConfigs = await Promise.all(configs);
-
-  return resolvedConfigs.flat().filter(Boolean);
 }
