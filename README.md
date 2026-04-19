@@ -8,7 +8,7 @@
 - 自动检测 TypeScript、Vue 等技术栈
 - 内置团队默认规则，用户规则优先级更高
 - ESLint Flat Config 格式（ESLint 9+）
-- 完整的 TypeScript 类型支持
+- 完整的 TypeScript 类型支持，类型自动与上游同步
 
 ## 安装
 
@@ -80,14 +80,31 @@ export default useConfig(
 );
 ```
 
+### 使用 FlatConfigComposer 链式 API
+
+`useConfig()` 返回 `FlatConfigComposer`，支持链式操作：
+
+```js
+// eslint.config.js
+import useConfig from '@purea/eslint-config';
+
+export default useConfig()
+  .override('antfu/javascript/rules', {
+    rules: { 'no-console': 'off' },
+  })
+  .append({
+    rules: { 'my-custom-rule': 'error' },
+  });
+```
+
 ## 导出
 
 | 导出 | 类型 | 说明 |
 | --- | --- | --- |
-| `default` / `useConfig` | 函数 | 工厂函数，返回 `Linter.Config[]` |
-| `Awaitable` | 类型 | 异步可等待类型（来自 `@antfu/eslint-config`） |
-| `OptionsConfig` | 类型 | 配置选项类型（来自 `@antfu/eslint-config`） |
-| `TypedFlatConfigItem` | 类型 | 配置项类型（来自 `@antfu/eslint-config`） |
+| `default` / `useConfig` | 函数 | 工厂函数，返回 `FlatConfigComposer` |
+| `Options` | 类型 | 配置选项类型（从 `antfu()` 参数推导） |
+| `ExtraConfigs` | 类型 | 额外配置参数类型（从 `antfu()` 参数推导） |
+| `Config` | 类型 | 返回值类型 `FlatConfigComposer`（从 `antfu()` 返回值推导） |
 
 ## 更多选项
 
@@ -114,5 +131,6 @@ pnpm lint       # ESLint 自检
 src/
 ├── index.ts     # 入口，导出 useConfig 及类型
 ├── factory.ts   # 工厂函数，注入默认规则
-└── configs.ts   # 团队默认规则定义
+├── configs.ts   # 文件级默认配置（Vue、Markdown 等）
+└── rules.ts     # 全局默认规则定义
 ```

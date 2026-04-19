@@ -1,3 +1,3 @@
-import { useConfig } from '@purea/eslint-config';
+import { useConfig } from './src';
 
 export default useConfig();
